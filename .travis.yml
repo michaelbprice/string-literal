@@ -1,0 +1,10 @@
+language: c++
+compiler:
+  - clang
+  - gcc
+
+script:
+  - mkdir build && cd $_
+  - cmake ..
+  - cmake --build .
+  - ./string_literal_test
