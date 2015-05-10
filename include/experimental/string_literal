@@ -27,6 +27,10 @@
 #ifndef INCL_EXPERIMENTAL_STRING_LITERAL
 #define INCL_EXPERIMENTAL_STRING_LITERAL
 
+namespace experimental {
 
+
+
+} // namespace experimental
 
 #endif // INCL_EXPERIMENTAL_STRING_LITERAL
