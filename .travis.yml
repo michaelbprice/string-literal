@@ -4,6 +4,7 @@ compiler:
   - gcc
 
 script:
+  - cd test && wget https://raw.githubusercontent.com/philsquared/Catch/master/single_include/catch.hpp && cd ..
   - mkdir build && cd $_
   - cmake ..
   - cmake --build .

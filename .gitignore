@@ -29,3 +29,6 @@
 
 # CMake output directory
 build/
+
+# Catch unit test header
+test/catch.hpp
