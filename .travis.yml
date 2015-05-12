@@ -4,6 +4,8 @@ compiler:
   - gcc
 
 script:
+  - if [ "$CXX" = "g++" ]; then sudo apt-get install -qq g++-4.8; fi
+  - if [ "$CXX" = "g++" ]; then export CXX="g++-4.8" CC="gcc-4.8"; fi
   - cd test && wget https://raw.githubusercontent.com/philsquared/Catch/master/single_include/catch.hpp && cd ..
   - mkdir build && cd $_
   - cmake ..
