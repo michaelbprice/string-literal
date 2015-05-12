@@ -27,10 +27,90 @@
 #ifndef INCL_EXPERIMENTAL_STRING_LITERAL
 #define INCL_EXPERIMENTAL_STRING_LITERAL
 
+#include <iterator>
+#include <string>
+
 namespace experimental {
+
+
+// basic_string_literal declaration
+//
+template <class charT, size_t N, class traits = std::char_traits<charT>>
+struct basic_string_literal
+{
+    charT data[N] = {0};
+
+public:
+    // Type aliases
+    //
+    using traits_type = traits;
+    using value_type = typename traits::char_type;
+
+    using reference = value_type&;
+    using const_reference = const value_type&;
+    using pointer = value_type*;
+    using const_pointer = const value_type*;
+
+    using iterator = pointer;
+    using const_iterator = const_pointer;
+    using reverse_iterator = std::reverse_iterator<iterator>;
+    using const_reverse_iterator = std::reverse_iterator<const_iterator>;
+
+
+    // Static members
+    //
+    using size_type = std::size_t; // TODO: This is not in N4121 (BUG)
+    static constexpr size_type npos = -1; // TODO: Use template variable instead?
+
+
+    // Construction, Destruction, and Operators
+    //
+    constexpr basic_string_literal() noexcept
+      : data{0}
+    {
+    }
+
+
+
+    // Accessors
+    //
+    constexpr const_reference operator[] (std::size_t pos) const noexcept
+    {
+        static_assert(pos <= N, "");
+        return data[pos];
+    }
+
+
+    // Properties
+    //
+    constexpr std::size_t size () const noexcept
+    {
+        return length();
+    }
+
+    constexpr std::size_t length () const noexcept
+    {
+        return N - 1;
+    }
+};
+
+
+template <typename charT, std::size_t N>
+constexpr basic_string_literal<charT, N> make_basic_string_literal(const charT (&s)[N])
+{
+    basic_string_literal<charT, N> r;
+    for (std::size_t i = 0; i < N; ++i)
+        r.data[i] = s[i];
+
+    return r;
+}
 
 
 
 } // namespace experimental
+
+
+#define S(s) make_basic_string_literal<char, sizeof(s)>(s)
+
 
 #endif // INCL_EXPERIMENTAL_STRING_LITERAL
